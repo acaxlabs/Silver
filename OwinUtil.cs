@@ -10,12 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Host;
-using Sherlock.Web.Models;
 using Microsoft.Owin;
 using Owin;
 using Silver;
 
-namespace Sherlock.Web.Models
+namespace Silver
 {
     public class OwinUtil
     {
