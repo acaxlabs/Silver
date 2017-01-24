@@ -1,0 +1,7 @@
+*/obj
+*/Content/Photos/
+*/Upload/
+*/bin
+*.suo
+*.user
+.vs/*
