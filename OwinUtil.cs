@@ -68,5 +68,29 @@ namespace Silver
         {
             return HttpContext.Current.GetOwinContext().GetUserManager<UserManager<TUser, Guid>>();
         }
+        /// <summary>
+        /// Signins in the user and stores the josn serialized userdata into ClaimTypes.UserData
+        /// </summary>
+        /// <param name="user"></param>
+        public static void SignIn(dynamic user)
+        {
+            
+            var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.ProviderName),
+                new Claim(ClaimTypes.Name, user.DisplayName),
+                new Claim(ClaimTypes.Email, user.UserEmail),
+                new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user))
+            };
+            identity.AddClaims(claims);
+            AuthenticationProperties props = new AuthenticationProperties()
+            {
+                IsPersistent = false
+            };
+            OwinUtil.GetAuthenticationManager().SignIn(props, identity);
+
+        }
     }
 }
