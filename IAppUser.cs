@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Silver
 {
-    public interface IAppUser : IUser<Guid>
+    public interface IAppUser : IUser<string>
     {
         string ProviderName { get; set; }
         string ProviderKey { get; set; }

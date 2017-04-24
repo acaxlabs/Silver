@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Silver
 {
-    public class UserStoreCore<TUser> : IUserStore<TUser, Guid>, IUserLoginStore<TUser, Guid>, IUserRoleStore<TUser, Guid>
+    public class UserStoreCore<TUser> : IUserStore<TUser, string>, IUserLoginStore<TUser, string>, IUserRoleStore<TUser, string>, IUserEmailStore<TUser>
+
         where TUser : class, IAppUser 
     {
         IAppUserStore<TUser> store;
@@ -126,6 +127,42 @@ namespace Silver
         public void Dispose()
         {
             store.Dispose();
+        }
+
+        public Task SetEmailAsync(TUser user, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetEmailAsync(TUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(TUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailConfirmedAsync(TUser user, bool confirmed)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TUser> FindByEmailAsync(string email)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                return store.FindByEmail(email);
+            });
+        }
+
+        public Task<TUser> FindByIdAsync(string userId)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                return store.FindById(Guid.Parse(userId));
+            });
         }
     }
 }

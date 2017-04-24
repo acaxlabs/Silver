@@ -21,17 +21,17 @@ namespace Silver
         /// <param name="app"></param>
         public static void Setup<TUser, TUserStore>(IAppBuilder app) where TUser : class, IAppUser where TUserStore : IAppUserStore<TUser>, new()
         {
-            app.CreatePerOwinContext<IUserStore<TUser, Guid>>((IdentityFactoryOptions<IUserStore<TUser, Guid>> options, IOwinContext context) => 
+            app.CreatePerOwinContext<IUserStore<TUser, string>>((IdentityFactoryOptions<IUserStore<TUser, string>> options, IOwinContext context) => 
             {
                 return new UserStoreCore<TUser>(new TUserStore());
             });
-            app.CreatePerOwinContext<UserManager<TUser, Guid>>((IdentityFactoryOptions<UserManager<TUser, Guid>> options, IOwinContext context) => 
+            app.CreatePerOwinContext<UserManager<TUser, string>>((IdentityFactoryOptions<UserManager<TUser, string>> options, IOwinContext context) => 
             {
-                return new UserManager<TUser, Guid>(context.Get<IUserStore<TUser, Guid>>());
+                return new UserManager<TUser, string>(context.Get<IUserStore<TUser, string>>());
             });
-            app.CreatePerOwinContext<SignInManager<TUser, Guid>>((IdentityFactoryOptions<SignInManager<TUser, Guid>> options, IOwinContext context) => 
+            app.CreatePerOwinContext<SignInManager<TUser, string>>((IdentityFactoryOptions<SignInManager<TUser, string>> options, IOwinContext context) => 
             {
-                return new SignInManager<TUser, Guid>(context.GetUserManager<UserManager<TUser, Guid>>(), context.Authentication);
+                return new SignInManager<TUser, string>(context.GetUserManager<UserManager<TUser, string>>(), context.Authentication);
             });
         }
 
@@ -49,9 +49,9 @@ namespace Silver
         /// </summary>
         /// <typeparam name="TUser"></typeparam>
         /// <returns></returns>
-        public static SignInManager<TUser, Guid> GetSignInManager<TUser>() where TUser : class, IAppUser
+        public static SignInManager<TUser, string> GetSignInManager<TUser>() where TUser : class, IAppUser
         {
-            return HttpContext.Current.GetOwinContext().Get<SignInManager<TUser, Guid>>();
+            return HttpContext.Current.GetOwinContext().Get<SignInManager<TUser, string>>();
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace Silver
         /// </summary>
         /// <typeparam name="TUser"></typeparam>
         /// <returns></returns>
-        public static UserManager<TUser, Guid> GetUserManager<TUser>() where TUser : class, IAppUser
+        public static UserManager<TUser, string> GetUserManager<TUser>() where TUser : class, IAppUser
         {
-            return HttpContext.Current.GetOwinContext().GetUserManager<UserManager<TUser, Guid>>();
+            return HttpContext.Current.GetOwinContext().GetUserManager<UserManager<TUser, string>>();
         }
         /// <summary>
         /// Signins in the user and stores the josn serialized userdata into ClaimTypes.UserData
