@@ -76,10 +76,14 @@ namespace Silver
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                 new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.ProviderName),
                 new Claim(ClaimTypes.Name, user.DisplayName),
-                new Claim(ClaimTypes.Email, user.UserEmail),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user))
             };
             identity.AddClaims(claims);
+            foreach (var item in user.ClaimRoles)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, item));
+            }
             AuthenticationProperties props = new AuthenticationProperties()
             {
                 IsPersistent = false
