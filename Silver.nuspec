@@ -6,6 +6,7 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+	<iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Electron_shell_047_silver.png/439px-Electron_shell_047_silver.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>Target .net framework 4.6</releaseNotes>
