@@ -64,12 +64,12 @@ namespace Silver
             return HttpContext.Current.GetOwinContext().GetUserManager<UserManager<TUser, string>>();
         }
         /// <summary>
-        /// Signins in the user and stores the josn serialized userdata into ClaimTypes.UserData
+        /// Signins in the user and stores the json serialized userdata into ClaimTypes.UserData
         /// </summary>
         /// <param name="user"></param>
         public static void SignIn(dynamic user)
         {
-            
+            GetAuthenticationManager().SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             var claims = new List<Claim>()
             {
@@ -88,7 +88,7 @@ namespace Silver
             {
                 IsPersistent = false
             };
-            OwinUtil.GetAuthenticationManager().SignIn(props, identity);
+            GetAuthenticationManager().SignIn(props, identity);
 
         }
     }
